@@ -103,14 +103,23 @@ const FormData = (props) => {
         .createProduct(cloneInputData)
         .send({ from: account, gas: 3000000 });
       toast.success("Product Added Successfully Into Blockchain");
+      setInputData({
+        code: "",
+        name: "",
+        agency: "",
+        price: "",
+        dueDate: "",
+        category: "",
+        description: "",
+        employee: "",
+      });
     } else {
       await contract.methods
         .updateProduct(inputData, index)
         .send({ from: account, gas: 3000000 });
       toast.success("Product Changed Successfully Into Blockchain");
+      props.handleClose();
     }
-
-    props.handleClose();
   };
 
   return (

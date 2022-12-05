@@ -2,6 +2,9 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract ProductFactory {
+
+    event SubmitProduct(Product product, uint indexed id);
+
     struct Product {
         string code;
         string name;
@@ -17,6 +20,8 @@ contract ProductFactory {
 
     function createProduct(Product memory product) public {
         products.push(product);
+        uint id = products.length; 
+        emit SubmitProduct(product, id);
     }
 
     function getAllProduct() public view returns (Product[] memory) {
@@ -29,5 +34,6 @@ contract ProductFactory {
 
     function updateProduct(Product memory product, uint index) public {
         products[index] = product;
+        emit SubmitProduct(product, index+1);
     }
 }

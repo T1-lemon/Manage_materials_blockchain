@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { faExternalLinkAlt, faLeaf } from "@fortawesome/free-solid-svg-icons";
 import {
   Col,
   Row,
@@ -11,59 +11,10 @@ import {
   Pagination,
 } from "@themesberg/react-bootstrap";
 
-import { transactionsData } from "../data/tables";
 import transactions from "../data/transactions";
 import commands from "../data/commands";
 import ModalForm from "./ModalForm";
-
-export const PageVisitsTable = () => {
-  const TableRow = (props) => {
-    const { nameContract, fromAddress, gasUsed, value } = props;
-    // const bounceIcon = bounceRate < 0 ? faArrowDown : faArrowUp;
-    // const bounceTxtColor = bounceRate < 0 ? "text-danger" : "text-success";
-
-    return (
-      <tr>
-        <th scope="row">{nameContract}</th>
-        <td>{fromAddress}</td>
-        <td>{gasUsed}</td>
-        <td>{value} ETH</td>
-      </tr>
-    );
-  };
-
-  return (
-    <Card border="light" className="shadow-sm">
-      <Card.Header>
-        <Row className="align-items-center">
-          <Col>
-            <h5>Transactions</h5>
-          </Col>
-          <Col className="text-end">
-            <Button variant="secondary" size="sm">
-              See all
-            </Button>
-          </Col>
-        </Row>
-      </Card.Header>
-      <Table responsive className="align-items-center table-flush">
-        <thead className="thead-light">
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">From Address</th>
-            <th scope="col">Gas Used</th>
-            <th scope="col">Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactionsData.map((pv) => (
-            <TableRow key={`page-visit-${pv.id}`} {...pv} />
-          ))}
-        </tbody>
-      </Table>
-    </Card>
-  );
-};
+import initContract from "../ultils/web3Contract";
 
 export const TransactionsTable = (props) => {
   const { products } = props;
@@ -97,12 +48,28 @@ export const TransactionsTable = (props) => {
 
     const [showEdit, setShowEdit] = useState(false);
     const [showDetailProduct, setShowDetailProduct] = useState(false);
+    const [showHistoryProduct, setShowHistoryProduct] = useState(false);
+    const [historyProducts, setHistoryProducts] = useState([]);
 
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
     const handleCloseDetailProduct = () => setShowDetailProduct(false);
     const handleShowDetailProduct = () => setShowDetailProduct(true);
+
+    const handleShowHistoryProduct = async () => {
+      const { web3, contract } = await initContract();
+      const idEvent = index + 1;
+      contract.getPastEvents(
+        "SubmitProduct",
+        { filter: { id: idEvent }, fromBlock: 0, toBlock: "latest" },
+        (err, events) => {
+          setHistoryProducts(events);
+        }
+      );
+      setShowHistoryProduct(true);
+    };
+    const handleCloseHistoryProduct = () => setShowHistoryProduct(false);
 
     return (
       <>
@@ -133,6 +100,7 @@ export const TransactionsTable = (props) => {
                 variant="outline-warning"
                 size="sm"
                 style={{ marginRight: "5px" }}
+                onClick={handleShowHistoryProduct}
               >
                 History
               </Button>
@@ -160,6 +128,14 @@ export const TransactionsTable = (props) => {
           initValue={initValue}
           isEdit={2}
         />
+
+        <ModalForm
+          handleClose={handleCloseHistoryProduct}
+          show={showHistoryProduct}
+          initValue={historyProducts}
+          isEdit={3}
+        />
+
       </>
     );
   };
