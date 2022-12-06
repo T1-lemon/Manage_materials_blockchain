@@ -32,7 +32,8 @@ const navLinkContent = [
   {title: 'Input Product', route: routes.InputProduct.path, icon: faUpload},
   {title: 'Agency', route: routes.InputAgency.path, icon: faUpload},
   {title: 'Category', route: routes.InputCategory.path, icon: faUpload},
-  {title: 'Products', route: routes.Transactions.path, icon: faHandHoldingUsd},
+  {title: 'Products Blockchain', route: routes.Transactions.path, icon: faHandHoldingUsd},
+  {title: 'Products Database', route: routes.AllProductBE.path, icon: faHandHoldingUsd},
   {title: 'Settings', route: routes.Settings.path, icon: faCog}
 ]
 export default (props = {}) => {
@@ -187,28 +188,6 @@ export default (props = {}) => {
                 icon={navItem.icon}
                 key={index} />)
               })}
-              <CollapsableNavItem
-                eventKey="examples/"
-                title="Page Examples"
-                icon={faFileAlt}
-              >
-                <NavItem title="Sign In" link={routes.Signin.path} />
-                <NavItem title="Sign Up" link={routes.Signup.path} />
-                <NavItem
-                  title="Forgot password"
-                  link={routes.ForgotPassword.path}
-                />
-                <NavItem
-                  title="Reset password"
-                  link={routes.ResetPassword.path}
-                />
-                <NavItem title="Lock" link={routes.Lock.path} />
-                <NavItem title="404 Not Found" link={routes.NotFound.path} />
-                <NavItem
-                  title="500 Server Error"
-                  link={routes.ServerError.path}
-                />
-              </CollapsableNavItem>
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
           </div>

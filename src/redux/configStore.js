@@ -9,10 +9,13 @@ const composedEnhances = composeWithDevTools(applyMiddleware(reduxThunk));
 
 const rootReducer = combineReducers({
     CategoryReducer,
-    AgencyReducer
+    AgencyReducer,
+    UserReducer,
+    ProductReducer
 });
 
 const store = createStore(rootReducer, composedEnhances);
 
 
 export default store;
+

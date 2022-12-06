@@ -4,7 +4,13 @@ import { Col, Row, Card } from "@themesberg/react-bootstrap";
 import Profile1 from "../assets/img/team/profile-picture-1.jpg";
 import ProfileCover from "../assets/img/profile-cover.jpg";
 
+import teamMembers from "../data/teamMembers";
+import { useSelector } from "react-redux";
+
+
 export const ProfileCardWidget = () => {
+  const userLogin = useSelector((state) => state.UserReducer.user);
+
   return (
     <Card border="light" className="text-center p-0 mb-4">
       <div
@@ -12,14 +18,9 @@ export const ProfileCardWidget = () => {
         className="profile-cover rounded-top"
       />
       <Card.Body className="pb-5">
-        <Card.Img
-          src={Profile1}
-          alt="Neil Portrait"
-          className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4"
-        />
-        <Card.Title>Neil Sims</Card.Title>
-        <Card.Subtitle className="fw-normal">Owner</Card.Subtitle>
-        <Card.Text className="text-gray mb-4">New York, USA</Card.Text>
+        <Card.Img src={userLogin.avatar} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />
+        <Card.Title>{userLogin.user_name}</Card.Title>
+        
       </Card.Body>
     </Card>
   );
