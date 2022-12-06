@@ -6,8 +6,8 @@ import { routes } from "../routes";
 import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Settings from "./Settings";
-import Signin from "./examples/Signin";
-import Signup from "./examples/Signup";
+import Signin from "./Login/Signin";
+import Signup from "./SignUp/Signup";
 import ForgotPassword from "./examples/ForgotPassword";
 import ResetPassword from "./examples/ResetPassword";
 import Lock from "./examples/Lock";
@@ -70,16 +70,17 @@ export default () => (
       <Route path={routes.InputProduct.path} element={<InputProduct />} />
     </Route>
 
+    <Route path={routes.Signin.path} element={<Signin />} />
+    <Route path={routes.Signup.path} element={<Signup />} />
+
     {/*Component */}
-    <Route path="/" element={<RouteWithoutSidebar />}>
-      <Route path={routes.Signin.path} element={<Signin />} />
-      <Route path={routes.Signup.path} element={<Signup />} />
+    {/* <Route path="/" element={<RouteWithoutSidebar />}>
       <Route path={routes.ForgotPassword.path} element={<ForgotPassword />} />
       <Route path={routes.ResetPassword.path} element={<ResetPassword />} />
       <Route path={routes.Lock.path} element={<Lock />} />
       <Route path={routes.NotFound.path} element={<NotFoundPage />} />
       <Route path={routes.ServerError.path} element={<ServerError />} />
-    </Route>
+    </Route> */}
     {/* <Redirect to={Routes.NotFound.path} /> */}
   </Routes>
 );

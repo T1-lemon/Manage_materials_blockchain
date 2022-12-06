@@ -7,6 +7,7 @@ import { Row, Col, Nav, Form, Image, Navbar, Dropdown, Container, ListGroup, Inp
 
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
+import { useNavigate } from "react-router-dom";
 
 
 export default (props) => {
@@ -44,6 +45,13 @@ export default (props) => {
         </Row>
       </ListGroup.Item>
     );
+  };
+
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/sign-in");
   };
 
   return (
@@ -108,7 +116,7 @@ export default (props) => {
 
                 <Dropdown.Divider />
 
-                <Dropdown.Item className="fw-bold">
+                <Dropdown.Item className="fw-bold" onClick={logOut}>
                   <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>
