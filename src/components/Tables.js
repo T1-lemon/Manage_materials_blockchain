@@ -159,9 +159,7 @@ export const AgencyTable = (props) => {
   const totalTransactions = transactions.length;
 
   const dispatch = useDispatch();
-  const handleDeleteAgency = async (id) => {
-    await dispatch(deleteAgencyApi(id));
-  }
+
 
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
@@ -186,14 +184,6 @@ export const AgencyTable = (props) => {
                   </td>
                   <td>
                     <div>
-                      <Button
-                        variant="outline-danger"
-                        style={{ marginRight: "5px" }}
-                        size="sm"
-                        onClick={() => handleDeleteAgency(agency.id)}
-                      >
-                        Delete
-                      </Button>
                       <Button
                         variant="outline-warning"
                         style={{ marginRight: "5px" }}
@@ -234,10 +224,6 @@ export const CategoryTable = (props) => {
   const totalTransactions = transactions.length;
   const dispatch = useDispatch();
 
-  const handleDeleteCategory = async (id) => {
-    await dispatch(deleteCategoryApi(id));
-  };
-
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="pt-0">
@@ -257,14 +243,6 @@ export const CategoryTable = (props) => {
                   </td>
                   <td>
                     <div>
-                      <Button
-                        variant="outline-danger"
-                        style={{ marginRight: "5px" }}
-                        size="sm"
-                        onClick={() => handleDeleteCategory(category.id)}
-                      >
-                        Delete
-                      </Button>
                       <Button
                         variant="outline-warning"
                         style={{ marginRight: "5px" }}
