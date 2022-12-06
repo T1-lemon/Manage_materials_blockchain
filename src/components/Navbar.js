@@ -8,6 +8,7 @@ import { Row, Col, Nav, Form, Image, Navbar, Dropdown, Container, ListGroup, Inp
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 export default (props) => {
@@ -49,9 +50,11 @@ export default (props) => {
 
   const navigate = useNavigate();
 
+  const userLogin = useSelector((state) => state.UserReducer.user);
+
   const logOut = () => {
     localStorage.clear();
-    navigate("/sign-in");
+    navigate("/");
   };
 
   return (
@@ -94,9 +97,9 @@ export default (props) => {
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle as={Nav.Link} className="pt-1 px-0">
                 <div className="media d-flex align-items-center">
-                  <Image src={Profile3} className="user-avatar md-avatar rounded-circle" />
+                  <Image src={userLogin.avatar} className="user-avatar md-avatar rounded-circle" />
                   <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span className="mb-0 font-small fw-bold">Bonnie Green</span>
+                    <span className="mb-0 font-small fw-bold">{userLogin.user_name}</span>
                   </div>
                 </div>
               </Dropdown.Toggle>

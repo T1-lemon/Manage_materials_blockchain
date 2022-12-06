@@ -1,9 +1,9 @@
 
 export const routes = {
     // pages
-    DashboardOverview: { path: "/dashboard/overview" },
-    Transactions: { path: "/products" },
-    Settings: { path: "/settings" },
+    DashboardOverview: { path: "dashboard/overview" },
+    Transactions: { path: "products" },
+    Settings: { path: "settings" },
     Upgrade: { path: "/upgrade" },
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Billing: { path: "/examples/billing" },
@@ -15,5 +15,5 @@ export const routes = {
     Lock: { path: "/examples/lock" },
     NotFound: { path: "/examples/404" },
     ServerError: { path: "/examples/500" },
-    InputProduct: {path: "/inputProduct"},
+    InputProduct: {path: "inputProduct"},
 };

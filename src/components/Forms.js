@@ -10,6 +10,8 @@ import { Col, Row, Card, Form, Button, InputGroup } from '@themesberg/react-boot
 export const GeneralInfoForm = () => {
   const [birthday, setBirthday] = useState("");
 
+  const userLogin = useState(state=>state.UserReducer.user);
+
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -18,7 +20,7 @@ export const GeneralInfoForm = () => {
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group id="firstName">
-                <Form.Label>First Name</Form.Label>
+                <Form.Label></Form.Label>
                 <Form.Control required type="text" placeholder="Enter your first name" />
               </Form.Group>
             </Col>

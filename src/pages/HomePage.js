@@ -58,9 +58,9 @@ function RouteWithoutSidebar() {
 
 export default () => (
   <Routes>
-    <Route path="/" element={<Navigate to={routes.DashboardOverview.path} />} />
+    {/* <Route path="/" element={<Navigate to={routes.DashboardOverview.path} />} /> */}
     {/* pages */}
-    <Route path="/" element={<RouteWithSidebar />}>
+    <Route path="/home/*" element={<RouteWithSidebar />}>
       <Route
         path={routes.DashboardOverview.path}
         element={<DashboardOverview />}
@@ -70,7 +70,9 @@ export default () => (
       <Route path={routes.InputProduct.path} element={<InputProduct />} />
     </Route>
 
-    <Route path={routes.Signin.path} element={<Signin />} />
+    {/* <Route path={routes.Signin.path} element={<Signin />} /> */}
+    <Route path="/" element={<Signin />} />
+
     <Route path={routes.Signup.path} element={<Signup />} />
 
     {/*Component */}

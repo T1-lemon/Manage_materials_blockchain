@@ -1,3 +1,4 @@
+import { ACCESS_TOKEN } from "../constannts/storage";
 import requestApi from "../ultils/requestApi";
 
 export const registerService = (values) => {
@@ -13,5 +14,15 @@ export const loginService = (values) => {
     method: "post",
     url: 'user/login',
     data: values,
+  });
+};
+
+export const getInforUserService = () => {
+  return requestApi({
+    method: "get",
+    url: `user/get_info`,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem(ACCESS_TOKEN),
+    },
   });
 };

@@ -29,11 +29,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { loginUserApi } from "../../redux/actions/UserAction";
+import { getInforUserApi, loginUserApi } from "../../redux/actions/UserAction";
+import { useEffect } from "react";
+import { ACCESS_TOKEN } from "../../constannts/storage";
 
 export default (props) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      navigate("/home/dashboard/overview");
+    }
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -52,9 +60,7 @@ export default (props) => {
     }),
 
     onSubmit: async (values) => {
-     
-      await dispatch(loginUserApi(values,navigate));
-
+      await dispatch(loginUserApi(values, navigate));
     },
   });
 
@@ -80,7 +86,7 @@ export default (props) => {
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Sign in to our platform</h3>
                 </div>
-                <Form className="mt-4" onSubmit={handleSubmit} >
+                <Form className="mt-4" onSubmit={handleSubmit}>
                   <Form.Group id="user_name" className="mb-4">
                     <Form.Label>User Name</Form.Label>
                     <InputGroup>
@@ -96,9 +102,7 @@ export default (props) => {
                         onChange={handleChange}
                       />
                     </InputGroup>
-                    <span className="text-danger">
-                      {errors.user_name}
-                    </span>
+                    <span className="text-danger">{errors.user_name}</span>
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
@@ -115,9 +119,7 @@ export default (props) => {
                           onChange={handleChange}
                         />
                       </InputGroup>
-                      <span className="text-danger">
-                      {errors.password}
-                    </span>
+                      <span className="text-danger">{errors.password}</span>
                     </Form.Group>
                   </Form.Group>
                   <Button variant="primary" type="submit" className="w-100">
