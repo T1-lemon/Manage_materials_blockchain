@@ -18,6 +18,9 @@ import InputProduct from "./InputProduct";
 import InputAgency from "./InputAgency";
 import InputCategory from "./InputCategory";
 import ProductBE from "./productBE/ProductBE";
+import { useDispatch } from "react-redux";
+import { getAllCategoryApi } from "../redux/actions/CategoryAction";
+import { getAllAgencyApi } from "../redux/actions/AgencyAction";
 
 function RouteWithSidebar() {
   const [loaded, setLoaded] = useState(false);
@@ -26,6 +29,17 @@ function RouteWithSidebar() {
     const timer = setTimeout(() => setLoaded(true), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    fetchData();
+  },[]);
+
+  const fetchData = async () => {
+    await dispatch(getAllCategoryApi());
+
+    await dispatch(getAllAgencyApi());
+  };
 
   return (
     <>

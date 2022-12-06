@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 import { CounterWidget } from "../../components/Widgets";
 import { PageVisitsTable } from "../../components/Tables";
 
@@ -15,12 +17,20 @@ import {
   Pagination,
   ButtonGroup,
 } from "@themesberg/react-bootstrap";
+import { getAllCategoryApi } from "../../redux/actions/CategoryAction";
+import { getAllAgencyApi } from "../../redux/actions/AgencyAction";
 
 export default () => {
-  return (
-    <>
+  const dispatch = useDispatch();
+  useEffect(() => {
+    fetchData();
+  },[]);
 
+  const fetchData = async () => {
+    await dispatch(getAllCategoryApi());
 
-    </>
-  );
+    await dispatch(getAllAgencyApi());
+  };
+
+  return <></>;
 };
