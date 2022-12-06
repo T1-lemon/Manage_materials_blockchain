@@ -30,19 +30,7 @@ export default function ProductBE() {
       </div>
     </div>
 
-    <div className="table-settings mb-1">
-      <Row className="justify-content-between align-items-center">
-        {/* <Col xs={8} md={6} lg={3} xl={4}>
-          <InputGroup>
-            <InputGroup.Text>
-              <FontAwesomeIcon icon={faSearch} />
-            </InputGroup.Text>
-            <Form.Control type="text" placeholder="Search" />
-          </InputGroup>
-        </Col> */}
-      
-      </Row>
-    </div>
+    
     <TableProduct />
   </>
   )

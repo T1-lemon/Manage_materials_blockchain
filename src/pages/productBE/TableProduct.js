@@ -49,22 +49,7 @@ export default function TableProduct(props) {
           })}
         </tbody>
       </Table>
-      <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between pb-0">
-        <Nav>
-          <Pagination className="mb-2 mb-lg-0">
-            <Pagination.Prev>Previous</Pagination.Prev>
-            <Pagination.Item active>1</Pagination.Item>
-            <Pagination.Item>2</Pagination.Item>
-            <Pagination.Item>3</Pagination.Item>
-            <Pagination.Item>4</Pagination.Item>
-            <Pagination.Item>5</Pagination.Item>
-            <Pagination.Next>Next</Pagination.Next>
-          </Pagination>
-        </Nav>
-        <small className="fw-bold">
-          Showing <b>10</b> out of <b>25</b> entries
-        </small>
-      </Card.Footer>
+     
     </Card.Body>
   </Card></>
   )

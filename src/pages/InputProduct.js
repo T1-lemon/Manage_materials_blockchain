@@ -1,6 +1,7 @@
 import React from "react";
 import { Row } from "@themesberg/react-bootstrap";
 import FormData from "../components/FormData";
+import FormInputProduct from "./productBE/FormInputProduct";
 const initValue = {
   code: "",
   name: "",
@@ -25,7 +26,7 @@ const InputProduct = () => {
           </div>
         </div>
 
-        <FormData initValue={initValue} />
+        <FormInputProduct initValue={initValue} />
       </Row>
     </>
   );

@@ -11,7 +11,7 @@ const initialState = {
   };
   
   const AgencyReducer = (state = initialState, action) => {
-    console.log(action)
+    
     switch (action.type) {
       case GET_AGENCY:
         return {
