@@ -183,9 +183,14 @@ export default (props = {}) => {
                 icon={faUpload}
               />
               <NavItem
-                title="Products"
+                title="Products Blockchain"
                 icon={faHandHoldingUsd}
                 link={routes.Transactions.path}
+              />
+              <NavItem
+                title="Database Products"
+                icon={faHandHoldingUsd}
+                link={routes.AllProductBE.path}
               />
               <NavItem
                 title="Settings"
