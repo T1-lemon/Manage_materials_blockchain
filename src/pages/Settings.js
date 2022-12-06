@@ -11,7 +11,7 @@ import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 export default () => {
   return (
     <>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+      {/* <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <Dropdown>
           <Dropdown.Toggle as={Button} variant="secondary" className="text-dark me-2">
             <FontAwesomeIcon icon={faPlus} className="me-2" />
@@ -64,9 +64,9 @@ export default () => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-      </div>
+      </div> */}
 
-      <Row>
+      <Row >
         <Col xs={12} xl={8}>
           <GeneralInfoForm />
         </Col>

@@ -183,9 +183,14 @@ export default (props = {}) => {
                 icon={faUpload}
               />
               <NavItem
-                title="Products"
+                title="Products Blockchain"
                 icon={faHandHoldingUsd}
                 link={routes.Transactions.path}
+              />
+              <NavItem
+                title="Database Products"
+                icon={faHandHoldingUsd}
+                link={routes.AllProductBE.path}
               />
               <NavItem
                 title="Settings"
@@ -193,7 +198,7 @@ export default (props = {}) => {
                 link={routes.Settings.path}
               />
 
-              <CollapsableNavItem
+              {/* <CollapsableNavItem
                 eventKey="examples/"
                 title="Page Examples"
                 icon={faFileAlt}
@@ -214,7 +219,7 @@ export default (props = {}) => {
                   title="500 Server Error"
                   link={routes.ServerError.path}
                 />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
           </div>
