@@ -10,14 +10,18 @@ import {
   Pagination,
 } from "@themesberg/react-bootstrap";
 import ModalProduct from "./ModalProduct";
-
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import initContract from "../../ultils/web3Contract";
+import { toast } from "react-toastify";
 
 export default function ProductRow(props) {
-    const {product} = props;
+  const { product } = props;
   const {
     code,
     name_product,
     Agency,
+    number,
     price,
     updatedAt,
     Category,
@@ -25,8 +29,6 @@ export default function ProductRow(props) {
     employee,
     id,
   } = product;
-
- 
 
   const [showEdit, setShowEdit] = useState(false);
   const [showDetailProduct, setShowDetailProduct] = useState(false);
@@ -37,9 +39,48 @@ export default function ProductRow(props) {
   const handleCloseDetailProduct = () => setShowDetailProduct(false);
   const handleShowDetailProduct = () => setShowDetailProduct(true);
 
+  console.log(product)
+  const handleSubmitBlockchain = () => {
+    const data = {
+      id: id.toString(),
+      code,
+      name: name_product,
+      agency: Agency.agency_name,
+      number: number.toString(),
+      price: price.toString(),
+      dueDate: updatedAt,
+      category: Category.category_name,
+      description,
+      employee: `${employee.user_name}`,
+    };
+
+    const init = async () => {
+      const { web3, contract } = await initContract();
+      const accounts = await web3.eth.getAccounts();
+      const account = accounts[0];
+      await contract.methods
+        .createProduct(data)
+        .send({ from: account, gas: 3000000 });
+      
+      toast.success("Product Changed Successfully Into Blockchain");
+    };
+
+    init();
+  };
+
   return (
     <>
       <tr>
+        <td>
+          <Button
+            variant="outline-success"
+            style={{ marginRight: "5px" }}
+            size="sm"
+            onClick={handleSubmitBlockchain}
+          >
+            <FontAwesomeIcon icon={faCheck} />
+          </Button>
+        </td>
         <td>
           <span className="fw-normal">{name_product}</span>
         </td>
@@ -73,8 +114,6 @@ export default function ProductRow(props) {
           </div>
         </td>
       </tr>
-
-      
 
       <ModalProduct
         handleClose={handleCloseDetailProduct}

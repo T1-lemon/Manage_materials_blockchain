@@ -19,7 +19,6 @@ import {
 import { TransactionsTable } from "../components/Tables";
 import ProductFactory from "../contracts/ProductFactory.json";
 import Web3 from "web3";
-// import { web3, contract } from "../ultils/web3Contract";
 import initContract from "../ultils/web3Contract";
 
 const ABI = ProductFactory.abi;

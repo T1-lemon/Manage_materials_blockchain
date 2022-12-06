@@ -17,33 +17,8 @@ import { deleteAgencyApi } from "../redux/actions/AgencyAction";
 export const TransactionsTable = (props) => {
   const { products } = props;
   const totalTransactions = transactions.length;
-
   const TableRow = (props) => {
-    const {
-      code,
-      name,
-      agency,
-      price,
-      dueDate,
-      category,
-      description,
-      employee,
-      index,
-    } = props.product;
-
-    const initValue = {
-      code,
-      name,
-      agency,
-      price,
-      dueDate,
-      category,
-      description,
-      employee,
-      index,
-      isCheckCreate: 2,
-    };
-
+    const initValue = props.product;
     const [showEdit, setShowEdit] = useState(false);
     const [showDetailProduct, setShowDetailProduct] = useState(false);
     const [showHistoryProduct, setShowHistoryProduct] = useState(false);
@@ -57,10 +32,10 @@ export const TransactionsTable = (props) => {
 
     const handleShowHistoryProduct = async () => {
       const { web3, contract } = await initContract();
-      const idEvent = index + 1;
+      const idEvent = initValue.index + 1;
       contract.getPastEvents(
         "SubmitProduct",
-        { filter: { id: idEvent }, fromBlock: 0, toBlock: "latest" },
+        { filter: { index: idEvent }, fromBlock: 0, toBlock: "latest" },
         (err, events) => {
           setHistoryProducts(events);
         }
@@ -73,16 +48,16 @@ export const TransactionsTable = (props) => {
       <>
         <tr>
           <td>
-            <span className="fw-normal">{name}</span>
+            <span className="fw-normal">{initValue.name}</span>
           </td>
           <td>
-            <span className="fw-normal">${parseFloat(price).toFixed(2)}</span>
+            <span className="fw-normal">${parseFloat(initValue.price).toFixed(2)}</span>
           </td>
           <td>
-            <span className="fw-normal">{dueDate.split("T")[0]}</span>
+            <span className="fw-normal">{initValue.dueDate.split("T")[0]}</span>
           </td>
           <td>
-            <span className="fw-normal">{category}</span>
+            <span className="fw-normal">{initValue.category}</span>
           </td>
           <td>
             <div>
@@ -153,7 +128,7 @@ export const TransactionsTable = (props) => {
           <tbody>
             {products.map((product, index) => {
               return (
-                <TableRow key={product.code} product={{ ...product, index }} />
+                <TableRow key={product.code} product={{... product, index: index}} />
               );
             })}
           </tbody>

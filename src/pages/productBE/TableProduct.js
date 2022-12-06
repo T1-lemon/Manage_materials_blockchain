@@ -34,6 +34,7 @@ export default function TableProduct(props) {
       <Table hover className="user-table align-items-center">
         <thead>
           <tr>
+            <th></th>
             <th className="border-bottom">Product's Name</th>
             <th className="border-bottom">Price</th>
             <th className="border-bottom">Due Date</th>

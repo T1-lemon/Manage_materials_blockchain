@@ -4,26 +4,30 @@ import { Col, Row, Card, Form, Button } from "@themesberg/react-bootstrap";
 import Web3 from "web3";
 import ProductFactory from "../contracts/ProductFactory.json";
 import { toast } from "react-toastify";
+import initContract from "../ultils/web3Contract";
 
 const ABI = ProductFactory.abi;
 const FormData = (props) => {
   const {
+    id, 
     code,
     name,
     agency,
+    number,
     price,
     dueDate,
     category,
     description,
     employee,
     index,
-    isCheckCreate,
   } = props.initValue;
 
   const [inputData, setInputData] = useState({
+    id,
     code,
     name,
     agency,
+    number,
     price,
     dueDate,
     category,
@@ -50,11 +54,19 @@ const FormData = (props) => {
     },
     {
       title: "Agency",
-      placeHolder: "Enter product's code",
+      placeHolder: "Enter product's agency",
       handleFunction: (e) => {
         setInputData({ ...inputData, agency: e.target.value });
       },
       value: inputData.agency,
+    },
+    {
+      title: "Number",
+      placeHolder: "Enter product's number",
+      handleFunction: (e) => {
+        setInputData({ ...inputData, number: e.target.value });
+      },
+      value: inputData.number,
     },
     {
       title: "Price",
@@ -71,56 +83,24 @@ const FormData = (props) => {
     contract: null,
   });
 
-  useEffect(() => {
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    
     const init = async () => {
-      const web3 = new Web3("http://127.0.0.1:7545");
-      const id = await web3.eth.net.getId();
-      const deployedNetwork = ProductFactory.networks[id];
-      const addressContract = deployedNetwork.address;
-      const contract = await new web3.eth.Contract(ABI, addressContract);
+      const { web3, contract } = await initContract();
       const accounts = await web3.eth.getAccounts();
       const account = accounts[0];
-      setWeb3Api({
-        web3: web3,
-        contract: contract,
-        account: account,
-      });
-    };
 
-    init();
-  }, []);
-
-  const handelSubmit = async (e) => {
-    e.preventDefault();
-    const date = new Date().toISOString();
-    const employee = "Bonnie Green";
-    const cloneInputData = { ...inputData, dueDate: date, employee: employee };
-    const contract = web3Api.contract;
-    const account = web3Api.account;
-
-    if (isCheckCreate === 1) {
       await contract.methods
-        .createProduct(cloneInputData)
-        .send({ from: account, gas: 3000000 });
-      toast.success("Product Added Successfully Into Blockchain");
-      setInputData({
-        code: "",
-        name: "",
-        agency: "",
-        price: "",
-        dueDate: "",
-        category: "",
-        description: "",
-        employee: "",
-      });
-    } else {
-      await contract.methods
-        .updateProduct(inputData, index)
-        .send({ from: account, gas: 3000000 });
+      .updateProduct(inputData, index)
+      .send({ from: account, gas: 3000000 });
+
       toast.success("Product Changed Successfully Into Blockchain");
       props.handleClose();
     }
-  };
+
+    init();
+    }
 
   return (
     <>
