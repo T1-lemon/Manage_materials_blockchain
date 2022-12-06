@@ -15,8 +15,8 @@ export const routes = {
     Lock: { path: "/examples/lock" },
     NotFound: { path: "/examples/404" },
     ServerError: { path: "/examples/500" },
-    InputAgency: {path: "/inputAgency"},
-    InputCategory: {path: "/inputCategory"},
+    InputAgency: {path: "inputAgency"},
+    InputCategory: {path: "inputCategory"},
     InputProduct: {path: "inputProduct"},
     AllProductBE: {path: "all-product"},
 

@@ -4,6 +4,8 @@ import reduxThunk from "redux-thunk";
 
 import CategoryReducer from "./reducers/CategoryReducer";
 import AgencyReducer from "./reducers/AgencyReducer";
+import UserReducer from './reducers/UserReducer';
+import ProductReducer from './reducers/ProductReducer';
 
 const composedEnhances = composeWithDevTools(applyMiddleware(reduxThunk));
 
