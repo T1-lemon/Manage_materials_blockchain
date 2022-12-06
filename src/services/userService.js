@@ -26,3 +26,14 @@ export const getInforUserService = () => {
     },
   });
 };
+
+export const editProfileService = (id,userEdit) => {
+  return requestApi({
+    method: "put",
+    url: `user/${id}`,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem(ACCESS_TOKEN),
+    },
+    data:userEdit
+  });
+};

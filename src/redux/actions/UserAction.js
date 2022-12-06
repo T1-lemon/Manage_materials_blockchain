@@ -1,5 +1,6 @@
 import { ACCESS_TOKEN, USER } from "../../constannts/storage";
 import {
+  editProfileService,
   getInforUserService,
   loginService,
   registerService,
@@ -34,6 +35,19 @@ export const loginUserApi = (values, navigate) => {
 export const getInforUserApi = () => {
   return async (dispatch) => {
     const { data } = await getInforUserService();
+    await localStorage.setItem(USER, JSON.stringify(data));
+
+    //dispatch lên reducer
+    await dispatch({
+      type: USER_LOGIN,
+      userLoggedIn: data,
+    });
+  };
+};
+
+export const editProfileApi = (id,userEdit) => {
+  return async (dispatch) => {
+    const { data } = await editProfileService(id,userEdit);
     await localStorage.setItem(USER, JSON.stringify(data));
 
     //dispatch lên reducer
