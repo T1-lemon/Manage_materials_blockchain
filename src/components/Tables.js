@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt, faLeaf } from "@fortawesome/free-solid-svg-icons";
 import {
-  Col,
-  Row,
   Nav,
   Card,
   Button,
@@ -12,9 +8,11 @@ import {
 } from "@themesberg/react-bootstrap";
 
 import transactions from "../data/transactions";
-import commands from "../data/commands";
 import ModalForm from "./ModalForm";
 import initContract from "../ultils/web3Contract";
+import { useDispatch } from "react-redux";
+import { deleteCategoryApi } from "../redux/actions/CategoryAction";
+import { deleteAgencyApi } from "../redux/actions/AgencyAction";
 
 export const TransactionsTable = (props) => {
   const { products } = props;
@@ -135,7 +133,6 @@ export const TransactionsTable = (props) => {
           initValue={historyProducts}
           isEdit={3}
         />
-
       </>
     );
   };
@@ -182,69 +179,147 @@ export const TransactionsTable = (props) => {
   );
 };
 
-export const CommandsTable = () => {
-  const TableRow = (props) => {
-    const { name, usage = [], description, link } = props;
+export const AgencyTable = (props) => {
+  const { agencies } = props;
+  const totalTransactions = transactions.length;
 
-    return (
-      <tr>
-        <td className="border-0" style={{ width: "5%" }}>
-          <code>{name}</code>
-        </td>
-        <td className="fw-bold border-0" style={{ width: "5%" }}>
-          <ul className="ps-0">
-            {usage.map((u) => (
-              <ol key={u} className="ps-0">
-                <code>{u}</code>
-              </ol>
-            ))}
-          </ul>
-        </td>
-        <td className="border-0" style={{ width: "50%" }}>
-          <pre className="m-0 p-0">{description}</pre>
-        </td>
-        <td className="border-0" style={{ width: "40%" }}>
-          <pre>
-            <Card.Link href={link} target="_blank">
-              Read More{" "}
-              <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-1" />
-            </Card.Link>
-          </pre>
-        </td>
-      </tr>
-    );
-  };
+  const dispatch = useDispatch();
+  const handleDeleteAgency = async (id) => {
+    await dispatch(deleteAgencyApi(id));
+  }
 
   return (
-    <Card border="light" className="shadow-sm">
-      <Card.Body className="p-0">
-        <Table
-          responsive
-          className="table-centered rounded"
-          style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}
-        >
-          <thead className="thead-light">
+    <Card border="light" className="table-wrapper table-responsive shadow-sm">
+      <Card.Body className="pt-0">
+        <Table hover className="user-table align-items-center">
+          <thead>
             <tr>
-              <th className="border-0" style={{ width: "5%" }}>
-                Name
-              </th>
-              <th className="border-0" style={{ width: "5%" }}>
-                Usage
-              </th>
-              <th className="border-0" style={{ width: "50%" }}>
-                Description
-              </th>
-              <th className="border-0" style={{ width: "40%" }}>
-                Extra
-              </th>
+              <th className="border-bottom">Agency's Name</th>
+              <th className="border-bottom">Agency's Address</th>
+              <th className="border-bottom">Action</th>
             </tr>
           </thead>
           <tbody>
-            {commands.map((c) => (
-              <TableRow key={`command-${c.id}`} {...c} />
-            ))}
+            {agencies.map((agency, index) => {
+              return (
+                <tr key={index}>
+                  <td>
+                    <span className="fw-normal">{agency.agency_name}</span>
+                  </td>
+                  <td>
+                    <span className="fw-normal">{agency.address}</span>
+                  </td>
+                  <td>
+                    <div>
+                      <Button
+                        variant="outline-danger"
+                        style={{ marginRight: "5px" }}
+                        size="sm"
+                        onClick={() => handleDeleteAgency(agency.id)}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="outline-warning"
+                        style={{ marginRight: "5px" }}
+                        size="sm"
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
+        <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between pb-0">
+          <Nav>
+            <Pagination className="mb-2 mb-lg-0">
+              <Pagination.Prev>Previous</Pagination.Prev>
+              <Pagination.Item active>1</Pagination.Item>
+              <Pagination.Item>2</Pagination.Item>
+              <Pagination.Item>3</Pagination.Item>
+              <Pagination.Item>4</Pagination.Item>
+              <Pagination.Item>5</Pagination.Item>
+              <Pagination.Next>Next</Pagination.Next>
+            </Pagination>
+          </Nav>
+          <small className="fw-bold">
+            Showing <b>{totalTransactions}</b> out of <b>25</b> entries
+          </small>
+        </Card.Footer>
+      </Card.Body>
+    </Card>
+  );
+};
+
+export const CategoryTable = (props) => {
+  const { categories } = props;
+  const totalTransactions = transactions.length;
+  const dispatch = useDispatch();
+
+  const handleDeleteCategory = async (id) => {
+    await dispatch(deleteCategoryApi(id));
+  };
+
+  return (
+    <Card border="light" className="table-wrapper table-responsive shadow-sm">
+      <Card.Body className="pt-0">
+        <Table hover className="user-table align-items-center">
+          <thead>
+            <tr>
+              <th className="border-bottom">Category's Name</th>
+              <th className="border-bottom">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((category, index) => {
+              return (
+                <tr key={index}>
+                  <td>
+                    <span className="fw-normal">{category.category_name}</span>
+                  </td>
+                  <td>
+                    <div>
+                      <Button
+                        variant="outline-danger"
+                        style={{ marginRight: "5px" }}
+                        size="sm"
+                        onClick={() => handleDeleteCategory(category.id)}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="outline-warning"
+                        style={{ marginRight: "5px" }}
+                        size="sm"
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+        <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between pb-0">
+          <Nav>
+            <Pagination className="mb-2 mb-lg-0">
+              <Pagination.Prev>Previous</Pagination.Prev>
+              <Pagination.Item active>1</Pagination.Item>
+              <Pagination.Item>2</Pagination.Item>
+              <Pagination.Item>3</Pagination.Item>
+              <Pagination.Item>4</Pagination.Item>
+              <Pagination.Item>5</Pagination.Item>
+              <Pagination.Next>Next</Pagination.Next>
+            </Pagination>
+          </Nav>
+          <small className="fw-bold">
+            Showing <b>{totalTransactions}</b> out of <b>25</b> entries
+          </small>
+        </Card.Footer>
       </Card.Body>
     </Card>
   );

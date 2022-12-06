@@ -13,8 +13,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import store from "./redux/store/store";
 import { Provider } from "react-redux";
+import store from "./redux/configStore";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
@@ -34,3 +34,4 @@ root.render(
     </BrowserRouter>
   </Provider>
 );
+

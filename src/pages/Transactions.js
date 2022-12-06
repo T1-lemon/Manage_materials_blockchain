@@ -78,7 +78,7 @@ export default () => {
                 </Dropdown.Item>
                 <Dropdown.Item className="fw-bold">20</Dropdown.Item>
                 <Dropdown.Item className="fw-bold">30</Dropdown.Item>
-              </Dropdown.Menu>
+              </Dropdown.Menu>  
             </Dropdown>
           </Col>
         </Row>

@@ -16,4 +16,6 @@ export const routes = {
     NotFound: { path: "/examples/404" },
     ServerError: { path: "/examples/500" },
     InputProduct: {path: "/inputProduct"},
+    InputAgency: {path: "/inputAgency"},
+    InputCategory: {path: "/inputCategory"},
 };

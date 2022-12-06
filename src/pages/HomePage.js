@@ -19,6 +19,8 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Preloader from "../components/Preloader";
 import InputProduct from "./InputProduct";
+import InputAgency from "./InputAgency";
+import InputCategory from "./InputCategory";
 
 function RouteWithSidebar() {
   const [loaded, setLoaded] = useState(false);
@@ -68,6 +70,8 @@ export default () => (
       <Route path={routes.Transactions.path} element={<Transactions />} />
       <Route path={routes.Settings.path} element={<Settings />} />
       <Route path={routes.InputProduct.path} element={<InputProduct />} />
+      <Route path={routes.InputAgency.path} element={<InputAgency />} />
+      <Route path={routes.InputCategory.path} element={<InputCategory />} />
     </Route>
 
     {/*Component */}

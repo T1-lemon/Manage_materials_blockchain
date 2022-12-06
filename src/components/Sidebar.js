@@ -27,6 +27,14 @@ import { routes } from "../routes";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
+const navLinkContent = [
+  {title: 'Overview', route: routes.DashboardOverview.path, icon: faChartPie},
+  {title: 'Input Product', route: routes.InputProduct.path, icon: faUpload},
+  {title: 'Agency', route: routes.InputAgency.path, icon: faUpload},
+  {title: 'Category', route: routes.InputCategory.path, icon: faUpload},
+  {title: 'Products', route: routes.Transactions.path, icon: faHandHoldingUsd},
+  {title: 'Settings', route: routes.Settings.path, icon: faCog}
+]
 export default (props = {}) => {
   const location = useLocation();
   const { pathname } = location;
@@ -172,27 +180,13 @@ export default (props = {}) => {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
-              <NavItem
-                title="Overview"
-                link={routes.DashboardOverview.path}
-                icon={faChartPie}
-              />
-              <NavItem
-                title="Input Product"
-                link={routes.InputProduct.path}
-                icon={faUpload}
-              />
-              <NavItem
-                title="Products"
-                icon={faHandHoldingUsd}
-                link={routes.Transactions.path}
-              />
-              <NavItem
-                title="Settings"
-                icon={faCog}
-                link={routes.Settings.path}
-              />
-
+              {navLinkContent.map((navItem, index) => {
+                return (<NavItem
+                title={navItem.title}
+                link={navItem.route}
+                icon={navItem.icon}
+                key={index} />)
+              })}
               <CollapsableNavItem
                 eventKey="examples/"
                 title="Page Examples"
