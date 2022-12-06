@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editProductApi } from "../../redux/actions/ProductAction";
 import { useNavigate } from "react-router-dom";
 
+
 export default function EditModal(props) {
     const {handleClose,product} = props;
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ export default function EditModal(props) {
         const data = {...values,employee_id:userLogin.id}
         await dispatch(editProductApi(id,data));
         handleClose();
+        toast.success("Product Changed Successfully!");
         navigate("/home/all-product");
     //   console.log("data", data);
     },

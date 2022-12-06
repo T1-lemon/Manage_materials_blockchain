@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { editProfileApi } from "../redux/actions/UserAction";
+import { toast } from "react-toastify";
 
 export const GeneralInfoForm = () => {
   const userLogin = useSelector((state) => state.UserReducer.user);
@@ -37,6 +38,7 @@ export const GeneralInfoForm = () => {
 
     onSubmit: async (values) => {
       await dispatch(editProfileApi(userLogin.id, values));
+      toast.success("Profile Changed Successfully");
     },
   });
 
