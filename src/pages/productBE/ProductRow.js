@@ -68,6 +68,11 @@ export default function ProductRow(props) {
     init();
   };
 
+  const VND = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
+
   return (
     <>
       <tr>
@@ -85,7 +90,7 @@ export default function ProductRow(props) {
           <span className="fw-normal">{name_product}</span>
         </td>
         <td>
-          <span className="fw-normal">{parseFloat(price).toFixed(2)}</span>
+          <span className="fw-normal">{VND.format(price)}</span>
         </td>
         <td>
           <span className="fw-normal">{updatedAt.split("T")[0]}</span>

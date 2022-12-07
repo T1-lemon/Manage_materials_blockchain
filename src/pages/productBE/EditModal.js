@@ -49,6 +49,8 @@ export default function EditModal(props) {
 
   const { values, touched, errors, handleChange, handleSubmit } = formik;
 
+  
+
   const inputs = [
     {
       title: "Code",
@@ -72,9 +74,11 @@ export default function EditModal(props) {
       title: "Price",
       placeHolder: "Enter product's price",
       name: "price",
-      value: values.price,
+      value:  values.price,
     },
   ];
+
+  
   return (
     <>
       <Row>

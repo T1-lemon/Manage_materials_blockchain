@@ -26,7 +26,7 @@ export default function ProductBE() {
     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1">
       <div className="d-block mb-1 mb-md-0">
         <h4>Products</h4>
-        <p className="mb-0">Show all product inside the database</p>
+        <p className="mb-0">Show all product inside the centralized database</p>
       </div>
     </div>
 
