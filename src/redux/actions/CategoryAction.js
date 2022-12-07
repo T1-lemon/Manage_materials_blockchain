@@ -9,6 +9,7 @@ import {
   createCategoryService,
   getAllCategoryService,
   deleteCategoryById,
+  editCategoryService,
 } from "../../services/categoryService";
 
 export const getAllCategoryApi = () => {
@@ -37,6 +38,16 @@ export const deleteCategoryApi = (id) => {
     const { data } = await getAllCategoryService();
     await dispatch({
       type: DELETE_CATEGORY,
+      payload: data,
+    });
+  };
+};
+
+export const editCategoryApi = (dataInput) => {
+  return async (dispatch) => {
+    const { data } = await editCategoryService(dataInput);
+    await dispatch({
+      type: EDIT_CATEGORY,
       payload: data,
     });
   };

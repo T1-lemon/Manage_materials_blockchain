@@ -24,7 +24,14 @@ const initialState = {
           agency: [...state.agency, action.payload],
         };
       case EDIT_AGENCY:
-        return {};
+        const respone = action.payload; 
+        const index = state.agency.findIndex(item => item.id === respone.id);
+        const cloneAgency = [...state.agency];
+        cloneAgency[index] = respone;
+        return {
+          ...state,
+          agency: cloneAgency,
+        };
       case DELETE_AGENCY:
         return {
           ...state,

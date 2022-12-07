@@ -1,3 +1,3 @@
-export const getAllAgency= (state) => {
+export const getAllAgencySelector = (state) => {
     return state.AgencyReducer.agency;
 }

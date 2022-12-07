@@ -39,3 +39,19 @@ export const deleteAgencyById = async (id) => {
     return error;
   }
 };
+
+export const editAgencyService = async (data) => {
+  try {
+    const respone = await axiosInstance({
+      method: "put",
+      url: `agency/${data.id}`,
+      data: {
+        agency_name: `${data.agencyName}`,
+        address: `${data.address}`,
+      },
+    });
+    return respone;
+  } catch (error) {
+    return error;
+  }
+};

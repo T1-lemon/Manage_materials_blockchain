@@ -6,6 +6,7 @@ import CategoryReducer from "./reducers/CategoryReducer";
 import AgencyReducer from "./reducers/AgencyReducer";
 import UserReducer from './reducers/UserReducer';
 import ProductReducer from './reducers/ProductReducer';
+import BlockchainReducer from "./reducers/BlockchainReducer";
 
 const composedEnhances = composeWithDevTools(applyMiddleware(reduxThunk));
 
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     CategoryReducer,
     AgencyReducer,
     UserReducer,
-    ProductReducer
+    ProductReducer,
+    BlockchainReducer,
 });
 
 const store = createStore(rootReducer, composedEnhances);

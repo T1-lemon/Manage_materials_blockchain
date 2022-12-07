@@ -1,6 +1,6 @@
 import { ACCESS_TOKEN } from "../constannts/storage";
 import requestApi from "../ultils/requestApi";
-
+import axiosInstance from "../ultils/axiosInstance";
 
 export const getAllProductService = () => {
   return requestApi({
@@ -38,3 +38,15 @@ export const editProductService = (id,values) => {
       data:values,
     });
 };
+
+export const deleteProductService = async (id) => {
+  try {
+    const respone = await axiosInstance({
+      method: "delete",
+      url: `product/${id}`,
+    });
+    return respone;
+  } catch (error) {
+    return error
+  }
+}

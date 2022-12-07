@@ -12,27 +12,29 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FormInputAgency from "../components/FormInputAgency";
 import FormInputCategory from "../components/FormInputCategory";
-import { createCategoryService, deleteCategoryById, getAllCategoryService } from "../services/categoryService";
+import {
+  createCategoryService,
+  deleteCategoryById,
+  getAllCategoryService,
+} from "../services/categoryService";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoryApi } from "../redux/actions/CategoryAction";
-import { getAllCategory } from "../redux/selectors/CategorySelectors";
+import { getAllCategorySelector } from "../redux/selectors/CategorySelectors";
 
 const InputCategory = () => {
   const [showForm, setShowForm] = useState(false);
   // const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
 
-  const categories = useSelector(getAllCategory);
+  const categories = useSelector(getAllCategorySelector);
 
-  
   useEffect(() => {
     const initValue = async () => {
-      await dispatch(getAllCategoryApi())
-    }
+      await dispatch(getAllCategoryApi());
+    };
 
-    initValue()
-  }, [])
-
+    initValue();
+  }, []);
 
   const handleShowForm = () => setShowForm(true);
   const handleCloseForm = () => setShowForm(false);
@@ -59,7 +61,7 @@ const InputCategory = () => {
         </Button>
       </div>
       <div>
-        <CategoryTable categories={categories}/>
+        <CategoryTable categories={categories} />
       </div>
       <Modal
         size="lg"
@@ -71,7 +73,7 @@ const InputCategory = () => {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormInputCategory />
+          <FormInputCategory category={{ category_name: "" }} />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

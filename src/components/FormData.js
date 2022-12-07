@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
-import moment from "moment-timezone";
+import React, { useState } from "react";
 import { Col, Row, Card, Form, Button } from "@themesberg/react-bootstrap";
-import Web3 from "web3";
 import ProductFactory from "../contracts/ProductFactory.json";
 import { toast } from "react-toastify";
 import initContract from "../ultils/web3Contract";
+import { useSelector } from "react-redux";
+import { getAllCategorySelector } from "../redux/selectors/CategorySelectors";
+import { getAllAgencySelector } from "../redux/selectors/AgencySelector";
+import { useDispatch } from "react-redux";
+import { getAllProductsInsideBlockchain } from "../redux/actions/BlockchainAction";
 
-const ABI = ProductFactory.abi;
 const FormData = (props) => {
+  const categories = useSelector(getAllCategorySelector);
+  const agencies = useSelector(getAllAgencySelector);
+
+  const dispatch = useDispatch();
   const {
     id, 
     code,
@@ -53,14 +59,6 @@ const FormData = (props) => {
       value: inputData.name,
     },
     {
-      title: "Agency",
-      placeHolder: "Enter product's agency",
-      handleFunction: (e) => {
-        setInputData({ ...inputData, agency: e.target.value });
-      },
-      value: inputData.agency,
-    },
-    {
       title: "Number",
       placeHolder: "Enter product's number",
       handleFunction: (e) => {
@@ -78,11 +76,6 @@ const FormData = (props) => {
     },
   ];
 
-  const [web3Api, setWeb3Api] = useState({
-    web3: null,
-    contract: null,
-  });
-
   const handelSubmit = (e) => {
     e.preventDefault();
     
@@ -95,7 +88,10 @@ const FormData = (props) => {
       .updateProduct(inputData, index)
       .send({ from: account, gas: 3000000 });
 
-      toast.success("Product Changed Successfully Into Blockchain");
+      const products = await contract.methods.getAllProduct().call();
+      await dispatch(getAllProductsInsideBlockchain(products))
+
+      await toast.success("Product Changed Successfully Into Blockchain");
       props.handleClose();
     }
 
@@ -112,7 +108,6 @@ const FormData = (props) => {
                 <Row>
                   {handle.map((item, index) => {
                     return (
-                      <>
                         <Col md={12} className="mb-3" key={index}>
                           <Form.Group>
                             <Form.Label>{item.title}</Form.Label>
@@ -125,7 +120,6 @@ const FormData = (props) => {
                             />
                           </Form.Group>
                         </Col>
-                      </>
                     );
                   })}
                 </Row>
@@ -142,9 +136,35 @@ const FormData = (props) => {
                         }
                         value={inputData.category}
                       >
-                        <option value="electronic">Electronic</option>
-                        <option value="medicine">Medicine</option>
-                        <option value="file">File</option>
+                        {categories.map((category, index) => {
+                          return (
+                            <option value={category.category_name}  key={index}>
+                              {category.category_name}
+                            </option>
+                          );
+                        })}
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                  <Col md={12} className="mb-3">
+                    <Form.Group id="gender">
+                      <Form.Label>Category</Form.Label>
+                      <Form.Select
+                        onChange={(e) =>
+                          setInputData({
+                            ...inputData,
+                            agency: e.target.value,
+                          })
+                        }
+                        value={inputData.agency}
+                      >
+                        {agencies.map((agency, index) => {
+                          return (
+                            <option value={agency.agency_name}  key={index}>
+                              {agency.agency_name}
+                            </option>
+                          );
+                        })}
                       </Form.Select>
                     </Form.Group>
                   </Col>

@@ -1,3 +1,3 @@
-export const getAllCategory = (state) => {
+export const getAllCategorySelector = (state) => {
     return state.CategoryReducer.category;
 }

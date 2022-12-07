@@ -14,14 +14,14 @@ import FormInputAgency from "../components/FormInputAgency";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllAgencyApi } from "../redux/actions/AgencyAction";
-import { getAllAgency } from "../redux/selectors/AgencySelector";
+import { getAllAgencySelector } from "../redux/selectors/AgencySelector";
 
 const InputAgency = () => {
   const [showForm, setShowForm] = useState(false);
 
   const dispatch = useDispatch();
 
-  const agencies = useSelector(getAllAgency);
+  const agencies = useSelector(getAllAgencySelector);
 
   useEffect(() => {
     const initValue = async () => {
@@ -63,11 +63,11 @@ const InputAgency = () => {
         onHide={handleCloseForm}
         scrollable={true}
       >
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormInputAgency />
+          <FormInputAgency agency={{ agency_name: "", address: "" }} />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

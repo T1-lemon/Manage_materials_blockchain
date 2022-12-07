@@ -9,7 +9,6 @@ import Settings from "./Settings";
 import Signin from "./Login/Signin";
 import Signup from "./SignUp/Signup";
 
-
 // components
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";

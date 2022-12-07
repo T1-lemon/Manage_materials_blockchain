@@ -5,17 +5,22 @@ import {
   Button,
   Table,
   Pagination,
+  Modal,
 } from "@themesberg/react-bootstrap";
 
 import transactions from "../data/transactions";
 import ModalForm from "./ModalForm";
 import initContract from "../ultils/web3Contract";
 import { useDispatch } from "react-redux";
-import { deleteCategoryApi } from "../redux/actions/CategoryAction";
-import { deleteAgencyApi } from "../redux/actions/AgencyAction";
+import { toast } from "react-toastify";
+import FormInputAgency from "./FormInputAgency";
+import FormInputCategory from "./FormInputCategory";
+import { useSelector } from "react-redux";
+import { getAllProductInsideBlockchainSelector } from "../redux/selectors/BlockchainSelector";
 
-export const TransactionsTable = (props) => {
-  const { products } = props;
+export const TransactionsTable = () => {
+  const products = useSelector(getAllProductInsideBlockchainSelector);
+
   const totalTransactions = transactions.length;
   const TableRow = (props) => {
     const initValue = props.product;
@@ -51,7 +56,9 @@ export const TransactionsTable = (props) => {
             <span className="fw-normal">{initValue.name}</span>
           </td>
           <td>
-            <span className="fw-normal">${parseFloat(initValue.price).toFixed(2)}</span>
+            <span className="fw-normal">
+              ${parseFloat(initValue.price).toFixed(2)}
+            </span>
           </td>
           <td>
             <span className="fw-normal">{initValue.dueDate.split("T")[0]}</span>
@@ -128,7 +135,10 @@ export const TransactionsTable = (props) => {
           <tbody>
             {products.map((product, index) => {
               return (
-                <TableRow key={product.code} product={{... product, index: index}} />
+                <TableRow
+                  key={product.code}
+                  product={{ ...product, index: index }}
+                />
               );
             })}
           </tbody>
@@ -156,10 +166,55 @@ export const TransactionsTable = (props) => {
 
 export const AgencyTable = (props) => {
   const { agencies } = props;
+
   const totalTransactions = transactions.length;
 
-  const dispatch = useDispatch();
+  const AgencyBody = (props) => {
+    const { agency } = props;
 
+    const [showForm, setShowForm] = useState(false);
+    const handleShowForm = () => setShowForm(true);
+    const handleCloseForm = () => setShowForm(false);
+
+    return (
+      <>
+        <tr>
+          <td>
+            <span className="fw-normal">{agency.agency_name}</span>
+          </td>
+          <td>
+            <span className="fw-normal">{agency.address}</span>
+          </td>
+          <td>
+            <div>
+              <Button
+                variant="outline-warning"
+                style={{ marginRight: "5px" }}
+                size="sm"
+                onClick={handleShowForm}
+              >
+                Edit
+              </Button>
+              <Modal
+                size="lg"
+                show={showForm}
+                onHide={handleCloseForm}
+                scrollable={true}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <FormInputAgency agency={agency} />
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+              </Modal>
+            </div>
+          </td>
+        </tr>
+      </>
+    );
+  };
 
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
@@ -174,27 +229,7 @@ export const AgencyTable = (props) => {
           </thead>
           <tbody>
             {agencies.map((agency, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <span className="fw-normal">{agency.agency_name}</span>
-                  </td>
-                  <td>
-                    <span className="fw-normal">{agency.address}</span>
-                  </td>
-                  <td>
-                    <div>
-                      <Button
-                        variant="outline-warning"
-                        style={{ marginRight: "5px" }}
-                        size="sm"
-                      >
-                        Edit
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              );
+              return <AgencyBody agency={agency} key={index} />;
             })}
           </tbody>
         </Table>
@@ -224,6 +259,50 @@ export const CategoryTable = (props) => {
   const totalTransactions = transactions.length;
   const dispatch = useDispatch();
 
+  const CategoryBody = (props) => {
+    const { category } = props;
+
+    const [showForm, setShowForm] = useState(false);
+    const handleShowForm = () => setShowForm(true);
+    const handleCloseForm = () => setShowForm(false);
+
+    return (
+      <>
+        <tr>
+          <td>
+            <span className="fw-normal">{category.category_name}</span>
+          </td>
+          <td>
+            <div>
+              <Button
+                variant="outline-warning"
+                style={{ marginRight: "5px" }}
+                size="sm"
+                onClick={handleShowForm}
+              >
+                Edit
+              </Button>
+              <Modal
+                size="lg"
+                show={showForm}
+                onHide={handleCloseForm}
+                scrollable={true}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <FormInputCategory category={category} />
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+              </Modal>
+            </div>
+          </td>
+        </tr>
+      </>
+    );
+  };
+
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="pt-0">
@@ -236,24 +315,7 @@ export const CategoryTable = (props) => {
           </thead>
           <tbody>
             {categories.map((category, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <span className="fw-normal">{category.category_name}</span>
-                  </td>
-                  <td>
-                    <div>
-                      <Button
-                        variant="outline-warning"
-                        style={{ marginRight: "5px" }}
-                        size="sm"
-                      >
-                        Edit
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              );
+              return <CategoryBody category={category} key={index}/>;
             })}
           </tbody>
         </Table>

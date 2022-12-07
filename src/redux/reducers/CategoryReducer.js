@@ -22,7 +22,14 @@ const CategoryReducer = (state = initialState, action) => {
         category: [...state.category, action.payload],
       };
     case EDIT_CATEGORY:
-      return {};
+      const respone = action.payload; 
+      const index = state.category.findIndex(item => item.id === respone.id);
+      const cloneCategory = [...state.category];
+      cloneCategory[index] = respone;
+      return {
+        ...state, 
+        category: cloneCategory,
+      };
     case DELETE_CATEGORY:
       return {
         ...state,

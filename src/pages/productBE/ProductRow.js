@@ -1,19 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import {
-  Col,
-  Row,
-  Nav,
-  Card,
   Button,
-  Table,
-  Pagination,
 } from "@themesberg/react-bootstrap";
 import ModalProduct from "./ModalProduct";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import initContract from "../../ultils/web3Contract";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { deleteProductApi } from "../../redux/actions/ProductAction";
 
 export default function ProductRow(props) {
   const { product } = props;
@@ -30,6 +26,8 @@ export default function ProductRow(props) {
     id,
   } = product;
 
+  const dispatch = useDispatch();
+
   const [showEdit, setShowEdit] = useState(false);
   const [showDetailProduct, setShowDetailProduct] = useState(false);
 
@@ -39,7 +37,7 @@ export default function ProductRow(props) {
   const handleCloseDetailProduct = () => setShowDetailProduct(false);
   const handleShowDetailProduct = () => setShowDetailProduct(true);
 
-  console.log(product)
+  const user = JSON.parse(localStorage.getItem("user"));
   const handleSubmitBlockchain = () => {
     const data = {
       id: id.toString(),
@@ -54,18 +52,25 @@ export default function ProductRow(props) {
       employee: `${employee.user_name}`,
     };
 
-    const init = async () => {
-      const { web3, contract } = await initContract();
-      const accounts = await web3.eth.getAccounts();
-      const account = accounts[0];
-      await contract.methods
-        .createProduct(data)
-        .send({ from: account, gas: 3000000 });
-      
-      toast.success("Product Changed Successfully Into Blockchain");
-    };
+    if (user.type === "client") {
+      toast.error(
+        "You do not have permission to import products into the blockchain"
+      );
+    } else {
+      const init = async () => {
+        const { web3, contract } = await initContract();
+        const accounts = await web3.eth.getAccounts();
+        const account = accounts[0];
+        await contract.methods
+          .createProduct(data)
+          .send({ from: account, gas: 3000000 });
 
-    init();
+        await dispatch(deleteProductApi(id));  
+        toast.success("Product Changed Successfully Into Blockchain");
+      };
+
+      init();
+    }
   };
 
   return (

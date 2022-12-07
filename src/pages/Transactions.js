@@ -20,15 +20,18 @@ import { TransactionsTable } from "../components/Tables";
 import ProductFactory from "../contracts/ProductFactory.json";
 import Web3 from "web3";
 import initContract from "../ultils/web3Contract";
+import { useDispatch } from "react-redux";
+import { getAllProductsInsideBlockchain } from "../redux/actions/BlockchainAction";
 
-const ABI = ProductFactory.abi;
 
 export default () => {
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     const init = async () => {
       const {web3, contract} = await initContract();
       const products = await contract.methods.getAllProduct().call();
+      dispatch(getAllProductsInsideBlockchain(products))
       setProducts(products);
     };
     init();
@@ -82,7 +85,7 @@ export default () => {
           </Col>
         </Row>
       </div>
-      <TransactionsTable  products = {products}/>
+      <TransactionsTable />
     </>
   );
 };

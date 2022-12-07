@@ -9,6 +9,7 @@ import {
   createAgencyService,
   getAllAgencyService,
   deleteAgencyById,
+  editAgencyService,
 } from "../../services/agencyService";
 
 export const getAllAgencyApi = () => {
@@ -37,6 +38,16 @@ export const deleteAgencyApi = (id) => {
     const { data } = await getAllAgencyService();
     await dispatch({
       type: DELETE_AGENCY,
+      payload: data,
+    });
+  };
+};
+
+export const editAgencyApi = (dataInput) => {
+  return async (dispatch) => {
+    const { data } = await editAgencyService(dataInput);
+    await dispatch({
+      type: EDIT_AGENCY,
       payload: data,
     });
   };

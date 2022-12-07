@@ -3,9 +3,18 @@ import {
   editProductService,
   getAllProductService,
   getDetailProductService,
+  deleteProductService
 } from "../../services/productService";
 import { GET_ALL_PRODUCT, GET_DETAIL_PRODUCT } from "../types/ProductType";
 import { toast } from "react-toastify";
+
+export const deleteProductApi = (id) => {
+  console.log(id);
+  return async (dispatch) => {
+    await deleteProductService(id);
+    await dispatch(getAllProductApi());
+  };
+};
 
 export const getAllProductApi = () => {
   return async (dispatch) => {
