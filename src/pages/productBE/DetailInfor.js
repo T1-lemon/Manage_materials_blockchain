@@ -14,12 +14,17 @@ export default function DetailInfor(props) {
     employee,
   } = props.product;
 
+  const VND = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
+
   const products = [
     { title: "Code", value: code },
     { title: "Name", value: name_product },
     { title: "Agency", value: Agency.agency_name },
     { title: "Number", value: number },
-    { title: "Price", value: price },
+    { title: "Price", value: VND.format(price) },
     { title: "Due Date", value: updatedAt.split("T")[0] },
     { title: "Category", value: Category.category_name },
     // { title: "Description", value: description },
